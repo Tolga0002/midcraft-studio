@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MidCraft Studio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">🤖 MidCraft&nbsp;Studio</div>
+    <div class="controls">
+      <button id="btn-run" class="primary" title="Programm ausführen">▶ Ausführen</button>
+      <button id="btn-stop" disabled title="Programm sofort anhalten">⏹ Stopp</button>
+      <label class="tempo" title="Geschwindigkeit des Agenten">
+        <span>🐢</span>
+        <input id="tempo" type="range" min="1" max="5" value="3" step="1">
+        <span>🐇</span>
+      </label>
+    </div>
+    <div class="controls">
+      <button id="btn-help" class="help" title="Hilfe — was tun, wenn etwas nicht klappt?">❓ Hilfe</button>
+      <button id="btn-mode" title="Mit Maus und WASD durch die Welt laufen (Esc zum Verlassen)">🎮 Spielmodus</button>
+      <button id="btn-tasks" title="Aufgabenliste öffnen/schließen">📋 Aufgaben</button>
+      <button id="btn-shot" title="Bild der 3D-Welt speichern">📸 Foto</button>
+      <button id="btn-export" title="Welt und Programme als Datei speichern">💾 Mitnehmen</button>
+      <button id="btn-import" title="Gespeicherte Datei öffnen">📂 Öffnen</button>
+      <button id="btn-agent-home" title="Agent zum Startpunkt zurückholen">🏠 Agent zum Start</button>
+      <button id="btn-reset" class="danger" title="Alles Gebaute löschen">🧹 Welt zurücksetzen</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="left">
+      <div id="scene-wrap">
+        <canvas id="scene"></canvas>
+
+        <div id="crosshair" class="hidden">+</div>
+        <div id="hand" class="hidden"></div>
+
+        <div id="hint">
+          🖱️ Ziehen = drehen · Rad = zoomen · Rechts ziehen = verschieben ·
+          <b>Klick = Block setzen</b> · <b>Rechtsklick = Block entfernen</b>
+        </div>
+
+        <div id="hotbar"></div>
+
+        <div id="toast" class="hidden"></div>
+
+        <aside id="tasks-panel" class="hidden">
+          <div class="tasks-head">
+            <span>📋 Die Aufgaben</span>
+            <button id="btn-tasks-close" title="Schließen">✕</button>
+          </div>
+          <div id="tasks-body"></div>
+        </aside>
+      </div>
+
+      <div id="chatbar">
+        <span class="chat-label">💬 Befehl:</span>
+        <input id="chat-input" placeholder="Befehl tippen und Enter — z. B. komm" autocomplete="off" spellcheck="false">
+        <button id="chat-send">Los!</button>
+        <span id="savestate" title="Deine Welt und deine Programme werden automatisch gespeichert"></span>
+      </div>
+    </section>
+
+    <section id="right">
+      <div id="blockly"></div>
+    </section>
+  </main>
+
+  <input type="file" id="file-input" accept=".json,application/json" hidden>
+
+  <!-- Erste Hilfe: beantwortet die Fragen, die sonst im Zoom-Chat landen -->
+  <div id="help-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>❓ Hilfe — erste Hilfe bei Problemen</h2>
+      <dl class="help-list">
+        <dt>Mein Agent ist weg!</dt>
+        <dd>Tippe unten <code>komm</code> und drücke Enter. Oder klick oben auf <b>🏠 Agent zum Start</b>.</dd>
+
+        <dt>Ich tippe einen Befehl, aber nichts passiert.</dt>
+        <dd>Prüfe, ob dein Befehl <b>genau</b> so im ⚡-Startblock steht. Klein schreiben, keine Umlaute:
+          <code>bruecke</code> statt <code>brücke</code>.</dd>
+
+        <dt>Es gibt gar keinen ⚡-Startblock.</dt>
+        <dd>Rechts im Editor auf <b>Start</b> klicken und den ⚡-Block in die Fläche ziehen.
+          Deine Befehlsblöcke müssen <b>darunter einrasten</b>.</dd>
+
+        <dt>Der Agent baut in die Luft / an der falschen Stelle.</dt>
+        <dd>Der Agent denkt aus <b>seiner</b> Sicht — sein links ist nicht dein links.
+          Dreh die Kamera hinter den Agenten und zähl seine Schritte einzeln nach.</dd>
+
+        <dt>Mein Programm hört nicht mehr auf.</dt>
+        <dd>Oben auf <b>⏹ Stopp</b> klicken. Dann <code>komm</code> tippen und von vorn.</dd>
+
+        <dt>Alles hängt / sieht kaputt aus.</dt>
+        <dd>Lade die Seite neu (<b>F5</b>). Deine Welt und deine Programme sind gespeichert und kommen zurück.</dd>
+
+        <dt>Ich habe aus Versehen alles kaputt gebaut.</dt>
+        <dd><b>🧹 Welt zurücksetzen</b> räumt die Welt auf. Deine Programme bleiben erhalten.</dd>
+
+        <dt>Der 🎮 Spielmodus startet nicht.</dt>
+        <dd>Kein Problem — du brauchst ihn für keine Aufgabe. Klicke einmal ins 3D-Bild und probier es erneut.
+          Zum Bauen reicht die normale Ansicht: Klick setzt einen Block, Rechtsklick entfernt ihn.</dd>
+      </dl>
+      <p class="help-foot">Wenn nichts hilft: Schreib im Zoom-Chat, was du gerade gemacht hast — und mach ein <b>📸 Foto</b>.</p>
+      <button id="btn-help-close" class="primary">Alles klar!</button>
+    </div>
+  </div>
+
+  <!-- Begrüßung beim allerersten Start -->
+  <div id="welcome-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>🤖 Willkommen bei MidCraft Studio!</h2>
+      <p class="welcome-lead">Du programmierst hier einen Roboter, der für dich baut. So geht's los:</p>
+      <ol class="welcome-steps">
+        <li><b>Rechts</b> baust du dein Programm aus bunten Blöcken zusammen.</li>
+        <li>Jedes Programm beginnt mit dem ⚡-Block <i>„wenn Befehl … eingegeben wird"</i> (Kategorie <b>Start</b>).</li>
+        <li><b>Unten links</b> tippst du diesen Befehl ein und drückst <b>Enter</b> — dein Roboter läuft los.</li>
+      </ol>
+      <p class="welcome-lead">In der Welt links kannst du mit der Maus selbst bauen:
+        <b>Klick</b> setzt einen Block, <b>Rechtsklick</b> entfernt ihn.</p>
+      <p class="help-foot">Steckst du fest? Oben rechts gibt es jederzeit den <b>❓ Hilfe</b>-Knopf.</p>
+      <button id="btn-welcome-close" class="primary">Los geht's!</button>
+    </div>
+  </div>
+
+  <!-- Wird nur sichtbar, wenn die 3D-Anzeige nicht startet -->
+  <div id="fatal" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>😕 Die 3D-Welt kann hier nicht starten</h2>
+      <p id="fatal-msg">Dein Browser kann die 3D-Anzeige nicht darstellen.</p>
+      <p><b>Das hilft fast immer:</b></p>
+      <ol class="welcome-steps">
+        <li>Öffne die Seite in <b>Google Chrome</b> oder <b>Microsoft Edge</b>.</li>
+        <li>Ist der Browser aktuell? Einmal aktualisieren und die Seite neu laden.</li>
+        <li>Schließe andere Programme und Tabs und lade neu (<b>F5</b>).</li>
+      </ol>
+      <p class="help-foot">Klappt es weiterhin nicht: Schreib im Zoom-Chat „3D startet nicht" — es gibt einen Ersatzweg.</p>
+    </div>
+  </div>
+
+  <script>
+    // Früher Check: Ohne WebGL zeigt die App eine Erklärung statt eines schwarzen Bildschirms.
+    (function () {
+      function zeigeFehler(text) {
+        var box = document.getElementById('fatal');
+        if (!box) return;
+        if (text) document.getElementById('fatal-msg').textContent = text;
+        box.classList.remove('hidden');
+      }
+      window.MIDCRAFT_FATAL = zeigeFehler;
+      try {
+        var c = document.createElement('canvas');
+        var gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (!gl) {
+          zeigeFehler('Dein Browser unterstützt keine 3D-Grafik (WebGL). Meist liegt es an einer älteren Browser-Version.');
+        }
+      } catch (e) {
+        zeigeFehler('Die 3D-Grafik konnte nicht gestartet werden.');
+      }
+      // Fängt Ladefehler der Bibliotheken ab (z. B. abgebrochener Download)
+      window.addEventListener('error', function (e) {
+        if (e && e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
+          zeigeFehler('Ein Teil der Seite konnte nicht geladen werden. Bitte lade die Seite neu (F5).');
+        }
+      }, true);
+    })();
+  </script>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/OrbitControls.js"></script>
+  <script src="vendor/PointerLockControls.js"></script>
+  <script src="vendor/blockly_compressed.js"></script>
+  <script src="vendor/blocks_compressed.js"></script>
+  <script src="vendor/blockly_de.js"></script>
+  <script src="js/materials.js?v=8"></script>
+  <script src="js/world.js?v=8"></script>
+  <script src="js/agent.js?v=8"></script>
+  <script src="js/blocks.js?v=8"></script>
+  <script src="js/interpreter.js?v=8"></script>
+  <script src="js/tasks.js?v=8"></script>
+  <script src="js/storage.js?v=8"></script>
+  <script src="js/main.js?v=8"></script>
+</body>
+</html>
