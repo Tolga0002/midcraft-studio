@@ -97,14 +97,39 @@ function main() {
   }
 
   // ── Hotbar (Tasten 1–8) ──
+  // 3D-Würfel-Icon wie im Vorbild: Oberseite hell, Seiten abgedunkelt
+  const cubeIcons = new Map();
+  function makeCubeIcon(id) {
+    if (cubeIcons.has(id)) return cubeIcons.get(id);
+    const tex = world.faceTextures.get(id);
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 64;
+    const g = cv.getContext('2d');
+    g.imageSmoothingEnabled = false;
+    const w = 22, h = 24, cx = 32, ct = 15; // Halbbreite, Seitenhöhe, Mitte der oberen Raute
+    const N = [cx, ct - w / 2], E = [cx + w, ct], S = [cx, ct + w / 2], W = [cx - w, ct];
+    const face = (img, O, U, V, schatten) => {
+      g.setTransform(U[0] / 16, U[1] / 16, V[0] / 16, V[1] / 16, O[0], O[1]);
+      g.drawImage(img, 0, 0);
+      if (schatten) { g.fillStyle = `rgba(0,0,0,${schatten})`; g.fillRect(0, 0, 16, 16); }
+      g.setTransform(1, 0, 0, 1, 0, 0);
+    };
+    const top = tex.top.userData.canvas, side = tex.side.userData.canvas;
+    face(top, N, [E[0] - N[0], E[1] - N[1]], [W[0] - N[0], W[1] - N[1]], 0);
+    face(side, W, [S[0] - W[0], S[1] - W[1]], [0, h], 0.2);   // linke Fläche
+    face(side, S, [E[0] - S[0], E[1] - S[1]], [0, h], 0.42);  // rechte Fläche
+    const url = `url(${cv.toDataURL()})`;
+    cubeIcons.set(id, url);
+    return url;
+  }
+
   let selectedMaterial = 'stein';
   const hotbar = document.getElementById('hotbar');
   MATERIAL_ORDER.forEach((id, i) => {
     const def = MATERIALS[id];
     const el = document.createElement('div');
     el.className = 'slot' + (id === selectedMaterial ? ' selected' : '');
-    const cvTop = world.faceTextures.get(id).side.userData.canvas;
-    el.style.backgroundImage = `url(${cvTop.toDataURL()})`;
+    el.style.backgroundImage = makeCubeIcon(id);
     el.dataset.material = id;
     el.innerHTML = `<span class="slot-num">${i + 1}</span><span class="slot-name">${def.name}</span>`;
     el.addEventListener('click', () => selectMaterial(id));
@@ -114,7 +139,7 @@ function main() {
   function selectMaterial(id) {
     selectedMaterial = id;
     document.querySelectorAll('.slot').forEach(s => s.classList.toggle('selected', s.dataset.material === id));
-    handEl.style.backgroundImage = `url(${world.faceTextures.get(id).side.userData.canvas.toDataURL()})`;
+    handEl.style.backgroundImage = makeCubeIcon(id);
   }
   selectMaterial(selectedMaterial);
   window.addEventListener('keydown', e => {

@@ -175,33 +175,43 @@ main {
 #scene-wrap { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 #scene { width: 100%; height: 100%; display: block; }
 
-/* ── Hotbar (unten Mitte, Tasten 1–8) ── */
+/* ── Hotbar (unten Mitte, Tasten 1–8) — Klötzchen-Spiel-Look ── */
 #hotbar {
   position: absolute;
   bottom: 42px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 4px;
-  padding: 5px;
-  background: rgba(15, 23, 42, 0.65);
-  border-radius: 10px;
-  backdrop-filter: blur(3px);
+  gap: 0;
+  padding: 0;
+  background: rgba(28, 32, 22, 0.55);
+  border: 2px solid rgba(15, 15, 15, 0.65);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 3px 10px rgba(0, 0, 0, 0.35);
   z-index: 10;
 }
 .slot {
-  width: 52px;
-  height: 52px;
-  border-radius: 6px;
-  border: 3px solid rgba(255, 255, 255, 0.25);
+  width: 54px;
+  height: 54px;
+  border: 2px solid #a6a6a6;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.28),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.38);
+  background-color: rgba(0, 0, 0, 0.16);
   cursor: pointer;
   position: relative;
   image-rendering: pixelated;
-  background-size: cover;
-  transition: transform 0.08s;
+  background-size: 88%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: filter 0.08s;
 }
-.slot:hover { transform: translateY(-3px); }
-.slot.selected { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.7); }
+.slot:hover { filter: brightness(1.18); }
+.slot.selected {
+  outline: 3px solid #f4f4f4;
+  outline-offset: 0;
+  z-index: 2;
+  filter: brightness(1.1);
+}
 .slot .slot-num {
   position: absolute;
   top: 1px;
@@ -231,15 +241,15 @@ main {
 #hand {
   position: absolute;
   right: 4%;
-  bottom: -18px;
-  width: 120px;
-  height: 120px;
-  background-size: cover;
+  bottom: -14px;
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
-  border-radius: 10px;
-  border: 3px solid rgba(0, 0, 0, 0.35);
-  transform: rotate(-10deg);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transform: rotate(-8deg);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5));
   transition: transform 0.09s ease-out;
   pointer-events: none;
   z-index: 12;
