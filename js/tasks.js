@@ -22,7 +22,7 @@ const TASK_GROUPS = [
       {
         title: 'Stufe 1 — „Der Weg"',
         cmd: 'weg',
-        text: 'Setz mit der Maus einen <b>Goldblock</b> als Ziel: 3 Schritte vor deinem Agenten, dann 2 Schritte links (aus Agentensicht!). ' +
+        text: 'Setz mit der Maus einen <b>Goldblock</b> als Ziel: 6 Schritte vor deinem Agenten, dann 2 Schritte links (aus Agentensicht!). ' +
           'Schreib ein Programm, das ihn genau dorthin laufen lässt — mit einem einzigen Befehl.',
         tip: 'Der Agent denkt aus SEINER Sicht — sein links ist nicht dein links. Dreh die Kamera hinter den Agenten!',
       },
