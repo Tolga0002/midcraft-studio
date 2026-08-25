@@ -168,9 +168,18 @@ main {
 #right { flex: 9; min-width: 320px; position: relative; }
 #blockly { position: absolute; inset: 0; }
 
-/* Blockly-Toolbox: größer und gut lesbar */
-.blocklyTreeLabel { font-size: 1rem !important; font-weight: 600; }
-.blocklyToolboxCategory, .blocklyTreeRow { padding: 5px 4px !important; cursor: pointer; }
+/* Blockly-Toolbox: größer, gut lesbar und in der Zeile ausgerichtet */
+.blocklyToolboxCategory {
+  height: auto !important; /* Kasten wächst mit dem Padding — sonst ragt der Text unten heraus */
+  padding: 5px 4px !important;
+  cursor: pointer;
+}
+.blocklyToolboxCategoryLabel {
+  font-size: 1rem !important;
+  font-weight: 600;
+  vertical-align: middle;
+}
+.blocklyToolboxCategoryIcon { vertical-align: middle; }
 
 #scene-wrap { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 #scene { width: 100%; height: 100%; display: block; }
