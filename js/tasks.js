@@ -7,12 +7,14 @@ const TASK_GROUPS = [
     title: 'Zum Start',
     tasks: [
       {
-        title: 'Aufgabe 0 — „Komm her!"',
-        cmd: 'komm',
-        text: 'Der Rettungsbefehl für den ganzen Tag: Bau ein Programm mit dem Startblock ' +
-          '<b>⚡ wenn Befehl „komm"</b> und dem Baustein <b>Agent teleportiere zum Start</b>. ' +
-          'Test: Lass den Agenten ein Stück weglaufen, tipp dann <b>komm</b> ins Befehlsfeld — er steht sofort wieder am Start.',
-        tip: 'Ab jetzt gibt es kein „mein Agent ist weg" mehr. Egal was schiefgeht: komm tippen, von vorn.',
+        title: 'Aufgabe 0 — „Los!" und „Komm her!"',
+        cmd: 'los · komm',
+        text: 'Zwei kleine Programme zum Start. <b>Erstens:</b> ⚡ „wenn Befehl <b>los</b>" + ' +
+          '„Agent bewege vorwärts um 10" — tipp <b>los</b>, der Roboter läuft davon. ' +
+          '<b>Zweitens:</b> ⚡ „wenn Befehl <b>komm</b>" + „Agent teleportiere zum Start" — ' +
+          'tipp <b>komm</b>, und er ist sofort zurück. Das ist dein Rettungsbefehl!',
+        tip: 'Ab jetzt gibt es kein „mein Agent ist weg" mehr. Egal was schiefgeht: komm tippen, von vorn. ' +
+          'Beide Programme bleiben nebeneinander im Editor liegen — jedes hört auf seinen eigenen Befehl.',
       },
     ],
   },
