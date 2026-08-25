@@ -99,10 +99,49 @@ button.help:hover { background: #0284c7; }
   overflow-y: auto;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
+.overlay-box { position: relative; }
+
+/* Scrollleiste immer sichtbar (macOS blendet sie sonst aus) */
+.overlay-box::-webkit-scrollbar { width: 12px; }
+.overlay-box::-webkit-scrollbar-thumb {
+  background: #64748b;
+  border-radius: 6px;
+  border: 3px solid var(--panel);
+}
+.overlay-box::-webkit-scrollbar-track { background: transparent; }
+
+/* „Da kommt noch was"-Hinweis: klebt unten, verschwindet am Ende */
+.overlay-box.zeig-scrollhinweis::after {
+  content: "▼  Scrollen — da kommt noch mehr  ▼";
+  position: sticky;
+  bottom: -22px;
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  padding: 10px 8px 4px;
+  background: linear-gradient(rgba(30, 41, 59, 0), var(--panel) 55%);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
 .overlay-box h2 {
   font-size: 1.35rem;
   margin-bottom: 14px;
 }
+/* Schließen-Kreuz: klebt oben rechts, auch beim Scrollen sichtbar */
+.overlay-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: -6px -10px 0 14px;
+  padding: 6px 13px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: #334155;
+  border-radius: 8px;
+  z-index: 5;
+}
+.overlay-close:hover { background: #b91c1c; }
 .overlay-box p { line-height: 1.55; margin-bottom: 10px; }
 .overlay-box code {
   background: #0f172a;

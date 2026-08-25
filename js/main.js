@@ -594,7 +594,11 @@ function main() {
   const helpOverlay = document.getElementById('help-overlay');
   const zeigeHilfe = () => { if (interpreter.running) interpreter.stop(); helpOverlay.classList.remove('hidden'); };
   document.getElementById('btn-help').addEventListener('click', zeigeHilfe);
-  document.getElementById('btn-help-close').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+  const hilfeZu = () => helpOverlay.classList.add('hidden');
+  document.getElementById('btn-help-close').addEventListener('click', hilfeZu);
+  document.getElementById('btn-help-close-x').addEventListener('click', hilfeZu);
+  // Klick auf den dunklen Hintergrund schließt ebenfalls — das versucht jeder intuitiv
+  helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) hilfeZu(); });
 
   // ── Begrüßung beim allerersten Start ──
   const welcomeOverlay = document.getElementById('welcome-overlay');
@@ -602,11 +606,31 @@ function main() {
   let schonGesehen = false;
   try { schonGesehen = !!localStorage.getItem(WELCOME_KEY); } catch (e) { /* z. B. blockierte Cookies */ }
   if (!schonGesehen) welcomeOverlay.classList.remove('hidden');
-  document.getElementById('btn-welcome-close').addEventListener('click', () => {
+  const willkommenZu = () => {
     welcomeOverlay.classList.add('hidden');
     try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) { /* egal */ }
     chatInput.focus();
+  };
+  document.getElementById('btn-welcome-close').addEventListener('click', willkommenZu);
+  document.getElementById('btn-welcome-close-x').addEventListener('click', willkommenZu);
+  welcomeOverlay.addEventListener('click', e => { if (e.target === welcomeOverlay) willkommenZu(); });
+
+  // Scroll-Hinweis in Overlays: „▼" zeigen, solange unten Inhalt verborgen ist
+  const scrollHinweisUpdates = [];
+  document.querySelectorAll('.overlay-box').forEach(box => {
+    const update = () => {
+      const scrollbar = box.scrollHeight - box.clientHeight > 8;
+      const amEnde = box.scrollTop + box.clientHeight >= box.scrollHeight - 28;
+      box.classList.toggle('zeig-scrollhinweis', scrollbar && !amEnde);
+    };
+    scrollHinweisUpdates.push(update);
+    box.addEventListener('scroll', update);
+    new ResizeObserver(update).observe(box);
   });
+  const aktualisiereScrollhinweise = () => scrollHinweisUpdates.forEach(f => f());
+  // Beim Öffnen der Overlays sofort prüfen (nicht auf den ResizeObserver verlassen)
+  document.getElementById('btn-help').addEventListener('click', () => setTimeout(aktualisiereScrollhinweise, 0));
+  if (!welcomeOverlay.classList.contains('hidden')) setTimeout(aktualisiereScrollhinweise, 0);
 
   // Esc schließt offene Overlays (außer der Fehlermeldung)
   window.addEventListener('keydown', e => {

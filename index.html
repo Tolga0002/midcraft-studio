@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MidCraft Studio</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
 </head>
 <body>
   <header id="topbar">
@@ -75,6 +75,7 @@
   <!-- Erste Hilfe: beantwortet die Fragen, die sonst im Zoom-Chat landen -->
   <div id="help-overlay" class="overlay hidden">
     <div class="overlay-box">
+      <button id="btn-help-close-x" class="overlay-close" title="Hilfe schließen">✕</button>
       <h2>❓ Hilfe — erste Hilfe bei Problemen</h2>
       <dl class="help-list">
         <dt>Mein Agent ist weg!</dt>
@@ -113,6 +114,7 @@
   <!-- Begrüßung beim allerersten Start -->
   <div id="welcome-overlay" class="overlay hidden">
     <div class="overlay-box">
+      <button id="btn-welcome-close-x" class="overlay-close" title="Schließen">✕</button>
       <h2>🤖 Willkommen bei MidCraft Studio!</h2>
       <p class="welcome-lead">Du programmierst hier einen Roboter, der für dich baut. So geht's los:</p>
       <ol class="welcome-steps">
@@ -176,13 +178,13 @@
   <script src="vendor/blockly_compressed.js"></script>
   <script src="vendor/blocks_compressed.js"></script>
   <script src="vendor/blockly_de.js"></script>
-  <script src="js/materials.js?v=11"></script>
-  <script src="js/world.js?v=11"></script>
-  <script src="js/agent.js?v=11"></script>
-  <script src="js/blocks.js?v=11"></script>
-  <script src="js/interpreter.js?v=11"></script>
-  <script src="js/tasks.js?v=11"></script>
-  <script src="js/storage.js?v=11"></script>
-  <script src="js/main.js?v=11"></script>
+  <script src="js/materials.js?v=12"></script>
+  <script src="js/world.js?v=12"></script>
+  <script src="js/agent.js?v=12"></script>
+  <script src="js/blocks.js?v=12"></script>
+  <script src="js/interpreter.js?v=12"></script>
+  <script src="js/tasks.js?v=12"></script>
+  <script src="js/storage.js?v=12"></script>
+  <script src="js/main.js?v=13"></script>
 </body>
 </html>
