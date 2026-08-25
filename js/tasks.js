@@ -55,13 +55,13 @@ const TASK_GROUPS = [
     title: 'Block 2 — Schleifen',
     tasks: [
       {
-        title: 'Stufe 1 — „Nochmal, aber schlau"',
-        cmd: 'mauer2',
-        text: 'Bau deine 3×3-Mauer aus Block 1 neu — diesmal mit dem <b>wiederhole</b>-Block: ' +
-          'Die ganze Säulen-Folge kommt <b>einmal</b> in die Schleife, <b>wiederhole 3 mal</b>. ' +
-          'Danach: Ändere die 3 auf <b>10</b> — dein Agent baut eine Monstermauer quer durchs Feld!',
-        tip: 'Alte Mauer im Weg? Wegschlagen (Rechtsklick) oder den Agenten vorher in eine freie Richtung drehen. ' +
-          'Und: Die Befehle müssen sichtbar IM wiederhole-Block einrasten.',
+        title: 'Stufe 1 — „Der rote Teppich"',
+        cmd: 'teppich',
+        text: 'Roll dem Roboter den roten Teppich aus! <b>zerstöre unten</b> + <b>platziere unten [Wolle (rot)]</b> ' +
+          'tauscht den Boden unter ihm aus. Pack beides mit <b>bewege vorwärts 1</b> in eine Schleife: ' +
+          '<b>wiederhole 6 mal</b>. Danach: Ändere die 6 auf <b>20</b> — ein Teppich quer durchs Feld!',
+        tip: 'Reihenfolge zählt: erst wegnehmen, dann hinlegen, dann der Schritt. ' +
+          'Und: Alle drei Befehle müssen sichtbar IM wiederhole-Block einrasten.',
       },
       {
         title: 'Stufe 2 — „Turm & Treppe"',

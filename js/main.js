@@ -696,7 +696,7 @@ function main() {
   if (loaded) toast('Willkommen zurück! Deine Welt wurde geladen.', 'success');
 
   // Für Tests und Fehlersuche
-  window.MC = { world, agent, workspace, interpreter, storage, WORLD };
+  window.MC = { world, agent, workspace, interpreter, storage, WORLD, scene, camera, renderer, controls };
 }
 
 // Start mit Auffangnetz: Scheitert der Aufbau, sieht das Kind eine Erklärung
