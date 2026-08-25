@@ -39,16 +39,25 @@ const PixelArt = (() => {
     }
   }
 
-  const GRAS = 0x5aa843, ERDE = 0x8a5a34, STEIN = 0x8f9296, HOLZ = 0xb07b45, GOLD = 0xf5c518;
+  // Palette am Klötzchen-Klassiker orientiert: olivgrünes Gras, grau-braune Erde mit Kieseln
+  const GRAS = 0x649735, ERDE = 0x7d5a3e, STEIN = 0x8f9296, HOLZ = 0xb07b45, GOLD = 0xf5c518;
 
-  function grasTop(g) { noiseFill(g, GRAS, [-0.14, -0.07, 0.08, 0.14, 0], 0.6); }
-  function erde(g) { noiseFill(g, ERDE, [-0.16, -0.08, 0.08, 0.15], 0.55); }
+  function grasTop(g) { noiseFill(g, GRAS, [-0.24, -0.13, -0.05, 0.09, 0.18], 0.8); }
+  function erde(g) {
+    noiseFill(g, ERDE, [-0.2, -0.1, 0.09, 0.18], 0.6);
+    for (let i = 0; i < 4; i++) { // helle Kieselsteinchen
+      const x = (rnd() * 15) | 0, y = (rnd() * 15) | 0;
+      px(g, x, y, '#8b8677');
+      if (rnd() < 0.6) px(g, x + 1, y, '#9a9384');
+    }
+    for (let i = 0; i < 3; i++) px(g, (rnd() * 16) | 0, (rnd() * 16) | 0, '#54402a'); // dunkle Brocken
+  }
   function grasSeite(g) {
     erde(g);
     for (let x = 0; x < 16; x++) {
-      for (let y = 0; y < 3; y++) px(g, x, y, shade(GRAS, pick([-0.12, 0, 0.1, -0.05])));
-      if (rnd() < 0.65) px(g, x, 3, shade(GRAS, pick([-0.1, 0])));
-      if (rnd() < 0.25) px(g, x, 4, shade(GRAS, -0.08));
+      for (let y = 0; y < 2; y++) px(g, x, y, shade(GRAS, pick([-0.18, -0.08, 0, 0.1])));
+      if (rnd() < 0.6) px(g, x, 2, shade(GRAS, pick([-0.14, -0.04])));
+      if (rnd() < 0.2) px(g, x, 3, shade(GRAS, -0.1));
     }
   }
   function stein(g) {

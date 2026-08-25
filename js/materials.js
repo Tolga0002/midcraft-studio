@@ -3,8 +3,8 @@
 
 // pix: 16×16-Pixel-Art pro Blockseite (eigene Texturen im Klötzchen-Spiel-Stil, keine fremden Assets)
 const MATERIALS = {
-  gras:        { name: 'Gras',          color: 0x58b04c, vary: 0.05, pix: 'gras' },
-  erde:        { name: 'Erde',          color: 0x8a5a34, vary: 0.04, pix: 'erde' },
+  gras:        { name: 'Gras',          color: 0x649735, vary: 0.05, pix: 'gras' },
+  erde:        { name: 'Erde',          color: 0x7d5a3e, vary: 0.04, pix: 'erde' },
   stein:       { name: 'Stein',         color: 0x9aa0a6, vary: 0.03, pix: 'stein' },
   holz:        { name: 'Holz',          color: 0xb07b45, vary: 0,    pix: 'holz' },
   gold:        { name: 'Goldblock',     color: 0xf5c518, vary: 0, emissive: 0x332600, pix: 'gold' },
