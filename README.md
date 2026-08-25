@@ -100,7 +100,7 @@ Keine Accounts, keine Cookies, keine Datenübertragung.
 ## Referenzlösungen
 
 `loesungen-referenz.json` enthält alle 14 Musterprogramme (`komm`, `weg`,
-`bruecke`, `mauer`, `kunst`, `bruecke2`, `turm`, `treppe`, `supermauer`,
+`bruecke`, `mauer`, `kunst`, `mauer2`, `turm`, `treppe`, `supermauer`,
 `pyramide`, `lauf`, `spring`, `bau`, `labyrinth`) mit frischer Welt.
 In der App über **📂 Öffnen** laden — z. B. um für das Teilnehmer-PDF
 Screenshots der echten Blöcke zu machen. **Achtung:** Vor dem Kurs nicht an

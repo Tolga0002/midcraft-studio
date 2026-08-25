@@ -56,11 +56,12 @@ const TASK_GROUPS = [
     tasks: [
       {
         title: 'Stufe 1 — „Nochmal, aber schlau"',
-        cmd: 'bruecke2',
-        text: 'Bau deine Brücke neu — diesmal mit dem <b>wiederhole</b>-Block: ' +
-          '<b>wiederhole 4 mal: bewege vorwärts 1 + platziere unten</b>. Aus 8 Bausteinen werden 3! ' +
-          'Danach: Ändere die 4 auf 20 — dein Agent baut eine Monsterbrücke quer durch die Welt.',
-        tip: 'Stecken deine zwei Befehle wirklich IM wiederhole-Block drin? Zieh sie mal ganz raus und wieder rein.',
+        cmd: 'mauer2',
+        text: 'Bau deine 3×3-Mauer aus Block 1 neu — diesmal mit dem <b>wiederhole</b>-Block: ' +
+          'Die ganze Säulen-Folge kommt <b>einmal</b> in die Schleife, <b>wiederhole 3 mal</b>. ' +
+          'Danach: Ändere die 3 auf <b>10</b> — dein Agent baut eine Monstermauer quer durchs Feld!',
+        tip: 'Alte Mauer im Weg? Wegschlagen (Rechtsklick) oder den Agenten vorher in eine freie Richtung drehen. ' +
+          'Und: Die Befehle müssen sichtbar IM wiederhole-Block einrasten.',
       },
       {
         title: 'Stufe 2 — „Turm & Treppe"',
